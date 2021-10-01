@@ -1,13 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {compose, createStore, applyMiddleware} from 'redux'
+import { rootReducer } from './redux/rootReducer';
+import {Provider} from 'react-redux' //библиотека для связки реакта с редаксом
+import thunk from "redux-thunk" //объект мидлвеера
+import { forbiddenWordsMiddleware } from './redux/middleware';
+import createSagaMiddleware from 'redux-saga'
+import { sagaWatcher } from './redux/sagas';
+
+const saga = createSagaMiddleware()
+
+const store = createStore(rootReducer, compose(
+  applyMiddleware(
+    thunk, forbiddenWordsMiddleware, saga // добавляем сагу в миддлвеер
+  ),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)) // создаем стор редакса это хранилище
+
+saga.run(sagaWatcher) //привязываем наш вотчер
+
+const app = ( //оборачиваем наше приложение в провайдер
+  <Provider store={store}>
+    <App/>
+  </Provider>
+)
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  app,
   document.getElementById('root')
 );
 
