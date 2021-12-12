@@ -1,4 +1,4 @@
-import { CREATE_POST, FETCH_POSTS } from "./types"
+import { CREATE_POST, FETCH_POSTS, NEW_POST } from "./types"
 
 const initialState = { // начальное состояние хранилища постов
   posts: [],
@@ -11,6 +11,8 @@ export const postsReducer = (state = initialState, action) => { // редьюс�
       return {...state, posts: [...state.posts, action.payload]} //добавляем в стор новый пост
       case FETCH_POSTS:
         return {...state, fetchedPosts: action.payload} //посты с сервера которые мы будет вставлять в стейт
+      case NEW_POST:
+      return {...state, posts: [...state.posts, action.payload]}
     default: return state
   }
 }

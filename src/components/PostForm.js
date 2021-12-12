@@ -1,6 +1,6 @@
 import  { Component } from "react";
 import {connect} from 'react-redux'
-import { createPost, showAlert } from "../redux/actions";
+import { createPost, showAlert, newPost } from "../redux/actions";
 
 
 class PostForm extends Component {
@@ -14,18 +14,18 @@ class PostForm extends Component {
 
   submitHandler = event => {
     event.preventDefault()
-
+    
     const {title} = this.state
 
     if (!title.trim()) {
       return this.props.showAlert('Название поста не может быть пустым')
     }
-
+    
     const newPost = {
       title, id: Date.now().toString()
     }
-    
-    this.props.createPost(newPost) // эта функция будет вызывать диспатч изменяя наш стейт
+
+    this.props.newPost(newPost) // эта функция будет вызывать диспатч изменяя наш стейт
     this.setState({title: ''})
   }
 
@@ -64,7 +64,7 @@ class PostForm extends Component {
 }
 
 const mapDispatchToProps = { // наш экшн передаем его в диспатч
-  createPost, showAlert
+  createPost, showAlert, newPost
 }
 
 const mapStateToProps = state => ({

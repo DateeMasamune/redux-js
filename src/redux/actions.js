@@ -1,4 +1,4 @@
-import { CREATE_POST, SHOW_LOADER, HIDE_LOADER, SHOW_ALERT, HIDE_ALERT, REQUEST_POSTS } from "./types"
+import { CREATE_POST, SHOW_LOADER, HIDE_LOADER, SHOW_ALERT, HIDE_ALERT, REQUEST_POSTS, NEW_POST } from "./types"
 
 export function createPost(post) { //отрабатывает если ничего не передаю
   return {
@@ -29,6 +29,13 @@ export function showAlert (text) {
     setTimeout(()=>{
       dispatch(hideAlert())
     }, 3000) 
+  }
+}
+
+export function newPost (post) {
+  return {
+    type: NEW_POST,
+    payload: post
   }
 }
 
